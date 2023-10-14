@@ -38,42 +38,40 @@ ranges = {
 
 # Get input values from user
 numeric_values = {}
-for var, (min_val, max_val) in ranges.items():
-    numeric_values[var] = st.sidebar.slider(var, min_value=min_val, max_value=max_val, value=min_val)
+for var, (min_val, max_val, name) in ranges.items():
+    numeric_values[var] = st.sidebar.slider(name, min_value=min_val, max_value=max_val, value=min_val)
 
-categorical_cols = {
-    ("Race*", ["White", "Mixed/Other", "Black"]),
-    ("Sex*", ["Male", "Female"]),
-    ("Previous esophageal variceal ligation*", ["No", "Yes"]),
-    ("Portal Hypertensive Gastropathy*", ["Mild", "Absent", "Intense"]),
-    ("Previous Ascites*", ["Yes", "No"]),
-    ("Previous Spontaneous Bacterial Peritonitis*", ["No", "Yes"]),
-    ("Previous Hepatopulmonary Syndrome*", ["No", "Yes"]),
-    ("Previous use of non-selective beta-blockers*", ["No", "Yes"]),
-    ("Portal Vein Thrombosis*", ["No", "Yes"]),
-    ("Hepatic encephalopathy*", ["No", "Yes"]),
-    ("Previous Hepatorenal Syndrome*", ["No", "Yes"]),
+
+categorical_cols = [
+    ("Race", ["White", "Mixed/Other", "Black"]),
+    ("Sex", ["Male", "Female"]),
+    ("Previous esophageal variceal ligation", ["No", "Yes"]),
+    ("Portal Hypertensive Gastropathy", ["Mild", "Absent", "Intense"]),
+    ("Previous Ascites", ["Yes", "No"]),
+    ("Previous Spontaneous Bacterial Peritonitis", ["No", "Yes"]),
+    ("Previous Hepatopulmonary Syndrome", ["No", "Yes"]),
+    ("Previous use of non-selective beta-blockers", ["No", "Yes"]),
+    ("Portal Vein Thrombosis", ["No", "Yes"]),
+    ("Hepatic encephalopathy", ["No", "Yes"]),
+    ("Previous Hepatorenal Syndrome", ["No", "Yes"]),
     ("Antibiotic Therapy More Than 24h", ["No", "Yes"]),
     ("Hospitalized For More than 48h", ["No", "Yes"]),
     ("PreTransplant Hemodialysis", ["No", "Yes"]),
-    ("Hepatocellular Carcinoma*", ["No", "Yes"]),
+    ("Hepatocellular Carcinoma", ["No", "Yes"]),
     ("Blood Group", ["O", "A", "B", "AB"]),
-    ("Congestive Heart Failure*", ["No", "Yes"]),
+    ("Congestive Heart Failure", ["No", "Yes"]),
     ("Angioplasty", ["No", "Yes"]),
-    ("Dyslipidemia*", ["No", "Yes"]),
+    ("Dyslipidemia", ["No", "Yes"]),
     ("Hypertension", ["No", "Yes"]),
     ("Acute Myocardial Infarction", ["No", "Yes"]),
     ("Stroke", ["Other", "Hemorrhagic", "Ischemic"]),
-    ("Diabetes Mellitus*", ["No", "Yes"]),
+    ("Diabetes Mellitus", ["No", "Yes"]),
     ("Valve Replacement", ["Other", "Biological", "Metallic"]),
     ("Mitral Insufficiency", ["Other", "Yes"]),
     ("Tricuspid Insufficiency", ["Yes"]),
     ("Non-invasive Diagnostic Method", ["Yes", "No"]),
     ("Dynamic Alteration", ["No", "Yes"])
-}
-
-
-
+]
 
 # Create select boxes for categorical variables with numeric values
 categorical_values = {}
