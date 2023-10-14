@@ -4,7 +4,7 @@ import json
 import numpy as np
 import pickle
 
-model = joblib.load('mmrech/model.joblib')
+model = joblib.load('mmrech/mace-calc/model.joblib')
 
 st.title("MACE Prediction After LT")
 
