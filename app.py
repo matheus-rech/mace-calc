@@ -41,7 +41,7 @@ numeric_values = {}
 for var, (min_val, max_val) in ranges.items():
     numeric_values[var] = st.sidebar.slider(var, min_value=min_val, max_value=max_val, value=min_val)
 
-categorical_cols = [
+categorical_cols = {
     ("Race*", ["White", "Mixed/Other", "Black"]),
     ("Sex*", ["Male", "Female"]),
     ("Previous esophageal variceal ligation*", ["No", "Yes"]),
@@ -70,7 +70,7 @@ categorical_cols = [
     ("Tricuspid Insufficiency", ["Yes"]),
     ("Non-invasive Diagnostic Method", ["Yes", "No"]),
     ("Dynamic Alteration", ["No", "Yes"])
-]
+}
 
 
 
