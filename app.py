@@ -9,7 +9,7 @@ model = joblib.load('model.joblib')
 st.title("MACE Prediction After LT")
 
 
-# Ranges for sliders derived from the dataset
+
 ranges = {
     'Weight': (30, 140, 'Weight (kg):'),
     'Height': (130, 200, 'Height (cm):'),
@@ -36,10 +36,10 @@ ranges = {
 }
 
 
-# Get input values from user
+
 numeric_values = {}
-for var, (min_val, max_val, _) in ranges.items():
-    numeric_values[var] = st.sidebar.slider(name, min_value=min_val, max_value=max_val, value=min_val)
+for var, (min_val, max_val, label) in ranges.items():
+    numeric_values[var] = st.sidebar.slider(label, min_value=min_val, max_value=max_val, value=min_val)
 
 
 categorical_cols = [
@@ -73,25 +73,25 @@ categorical_cols = [
     ("Dynamic Alteration", ["No", "Yes"])
 ]
 
-# Create select boxes for categorical variables with numeric values
+
 categorical_values = {}
 for categorical_var, classes in categorical_cols:
     options = {cls: i for i, cls in enumerate(classes)}
     selected_option = st.sidebar.selectbox(categorical_var, list(options.keys()))
     categorical_values[categorical_var] = options[selected_option]
 
-# Combine numeric and categorical values into a single dictionary
+
 features = {**numeric_values, **categorical_values}
 
-# Convert features dictionary to a 2D array for model prediction
+
 features_array = np.array(list(features.values())).reshape(1, -1)
 
-# Define the predict function
+
 def predict(features_array):
     prediction = model.predict(features_array)
     return prediction
 
-# Make prediction and display result
+
 if st.button('Predict'):
     prediction = predict(features_array)
     if prediction[0] == 1:
@@ -101,7 +101,7 @@ if st.button('Predict'):
     else:
         st.write("Unexpected prediction value: please check the model.")
 
-# Add disclaimer
+
 disclaimer_text = """
 #### Disclaimer
 
