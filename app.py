@@ -38,7 +38,7 @@ ranges = {
 
 # Get input values from user
 numeric_values = {}
-for var, (min_val, max_val, name) in ranges.items():
+for var, (min_val, max_val, _) in ranges.items():
     numeric_values[var] = st.sidebar.slider(name, min_value=min_val, max_value=max_val, value=min_val)
 
 
