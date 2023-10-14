@@ -8,13 +8,35 @@ model = joblib.load('model.joblib')
 
 st.title("MACE Prediction After LT")
 
-numeric_cols = [
-    'Weight', 'Height', 'BodyMassIndex', 'Hematocrit', 'Leukocytes', 'Platelets',
-    'TotalBilirubin', 'DirectBilirubin', 'Creatinine', 'Urea', 'ProthrombinTimeActivity',
-    'InternationalNormalizedRatio', 'Sodium', 'Potassium', 'Albumin', 'AST', 'ALT', 'GGT',
-    'AlkalinePhosphatase', 'LeftAtriumSize', 'DistalVolumeOfLeftVentricle',
-    'SystolicVolumeOfLeftVentricle'
-]
+ranges = {
+    'Weight': (32, 130),
+    'Height': (139, 192),
+    'BodyMassIndex': (15, 45),
+    'Hematocrit': (4, 54),
+    'Leukocytes': (1080, 65000),
+    'Platelets': (4000, 666000),
+    'TotalBilirubin': (0, 49),
+    'DirectBilirubin': (0, 24),
+    'Creatinine': (0, 29),
+    'Urea': (1, 500),
+    'ProthrombinTimeActivity': (13, 100),
+    'InternationalNormalizedRatio': (0, 7),
+    'Sodium': (109, 154),
+    'Potassium': (1, 7),
+    'Albumin': (1, 8),
+    'AST': (1, 504),
+    'ALT': (1, 666),
+    'GGT': (2, 1822),
+    'AlkalinePhosphatase': (19, 1279),
+    'LeftAtriumSize': (20, 88),
+    'DistalVolumeOfLeftVentricle': (16, 95),
+    'SystolicVolumeOfLeftVentricle': (3, 83),
+}
+
+# Get input values from user
+numeric_values = {}
+for var, (min_val, max_val) in ranges.items():
+    numeric_values[var] = st.sidebar.slider(var, min_value=min_val, max_value=max_val, value=min_val)
 
 categorical_cols = [
     ("Race", ["White", "Black", "Mixed/Other"]),
@@ -48,10 +70,6 @@ categorical_cols = [
 ]
 
 
-# Create input fields for numeric variables
-numeric_values = {}
-for numeric_var in numeric_cols:
-    numeric_values[numeric_var] = st.sidebar.number_input(numeric_var, value=0.0)
 
 # Create select boxes for categorical variables with numeric values
 categorical_values = {}
