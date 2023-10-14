@@ -8,30 +8,33 @@ model = joblib.load('model.joblib')
 
 st.title("MACE Prediction After LT")
 
+
+# Ranges for sliders derived from the dataset
 ranges = {
-    'Weight': (32, 130),
-    'Height': (139, 192),
-    'BodyMassIndex': (15, 45),
-    'Hematocrit': (4, 54),
-    'Leukocytes': (1080, 65000),
-    'Platelets': (4000, 666000),
-    'TotalBilirubin': (0, 49),
-    'DirectBilirubin': (0, 24),
-    'Creatinine': (0, 29),
-    'Urea': (1, 500),
-    'ProthrombinTimeActivity': (13, 100),
-    'InternationalNormalizedRatio': (0, 7),
-    'Sodium': (109, 154),
-    'Potassium': (1, 7),
-    'Albumin': (1, 8),
-    'AST': (1, 504),
-    'ALT': (1, 666),
-    'GGT': (2, 1822),
-    'AlkalinePhosphatase': (19, 1279),
-    'LeftAtriumSize': (20, 88),
-    'DistalVolumeOfLeftVentricle': (16, 95),
-    'SystolicVolumeOfLeftVentricle': (3, 83),
+    'Weight': (30, 140, 'Weight (kg):'),
+    'Height': (130, 200, 'Height (cm):'),
+    'BodyMassIndex': (15, 50, 'Body Mass Index (BMI):'),
+    'Hematocrit': (4, 60, 'Hematocrit:'),
+    'Leukocytes': (1080, 65000, 'Leukocyte Count:'),
+    'Platelets': (4000, 666000, 'Platelets:'),
+    'TotalBilirubin': (0, 50, 'Total Bilirubin:'),
+    'DirectBilirubin': (0, 30, 'Direct Bilirubin Level:'),
+    'Creatinine': (0, 30, 'Creatinine Level:'),
+    'Urea': (1, 500, 'Urea Level:'),
+    'ProthrombinTimeActivity': (13, 100, 'Prothrombin Time Activity:'),
+    'InternationalNormalizedRatio': (0, 10, 'International Normalized Ratio:'),
+    'Sodium': (100, 160, 'Sodium:'),
+    'Potassium': (1, 10, 'Potassium:'),
+    'Albumin': (1, 10, 'Albumin:'),
+    'AST': (1, 510, 'Aspartate Aminotransferase (AST):'),
+    'ALT': (1, 700, 'Alanine Aminotransferase (ALT):'),
+    'GGT': (1, 1900, 'Gamma-Glutamyl Transferase (GGT):'),
+    'AlkalinePhosphatase': (10, 1300, 'Alkaline Phosphatase:'),
+    'LeftAtriumSize': (20, 90, 'Left Atrium Size:'),
+    'DistalVolumeOfLeftVentricle': (10, 100, 'Distal Volume Of Left Ventricle:'),
+    'SystolicVolumeOfLeftVentricle': (1, 90, 'Systolic Volume Of Left Ventricle:'),
 }
+
 
 # Get input values from user
 numeric_values = {}
@@ -39,35 +42,36 @@ for var, (min_val, max_val) in ranges.items():
     numeric_values[var] = st.sidebar.slider(var, min_value=min_val, max_value=max_val, value=min_val)
 
 categorical_cols = [
-    ("Race", ["White", "Black", "Mixed/Other"]),
-    ("Sex", ["Female", "Male"]),
-    ("PreviousVaricealBandLigation", ["No", "Yes"]),
-    ("PortalHypertensiveGastropathy", ["Mild", "Severe", "None"]),
-    ("Ascites", ["No", "Yes"]),
-    ("SpontaneousBacterialPeritonitis", ["No", "Yes"]),
-    ("HepatopulmonarySyndrome", ["No", "Yes"]),
-    ("BetaBlockerUse", ["No", "Yes"]),
-    ("PortalVeinThrombosis", ["No", "Yes"]),
-    ("HepaticEncephalopathy", ["No", "Yes"]),
-    ("HepatorenalSyndrome", ["No", "Yes"]),
-    ("AntibioticTherapyFor24h", ["No", "Yes"]),
-    ("HospitalizedFor48h", ["No", "Yes"]),
-    ("PreTransplantHemodialysis", ["No", "Yes"]),
-    ("HepatocellularCarcinoma", ["No", "Yes"]),
-    ("MitralInsufficiency", ["Mild", "Moderate", "Severe", "Absent"]),
-    ("TricuspidInsufficiency", ["Mild", "Moderate", "Severe", "Absent"]),
-    ("BloodGroup", ["A", "B", "AB", "O"]),
-    ("CongestiveHeartFailure", ["No", "Yes"]),
+    ("Race*", ["White", "Mixed/Other", "Black"]),
+    ("Sex*", ["Male", "Female"]),
+    ("Previous esophageal variceal ligation*", ["No", "Yes"]),
+    ("Portal Hypertensive Gastropathy*", ["Mild", "Absent", "Intense"]),
+    ("Previous Ascites*", ["Yes", "No"]),
+    ("Previous Spontaneous Bacterial Peritonitis*", ["No", "Yes"]),
+    ("Previous Hepatopulmonary Syndrome*", ["No", "Yes"]),
+    ("Previous use of non-selective beta-blockers*", ["No", "Yes"]),
+    ("Portal Vein Thrombosis*", ["No", "Yes"]),
+    ("Hepatic encephalopathy*", ["No", "Yes"]),
+    ("Previous Hepatorenal Syndrome*", ["No", "Yes"]),
+    ("Antibiotic Therapy More Than 24h", ["No", "Yes"]),
+    ("Hospitalized For More than 48h", ["No", "Yes"]),
+    ("PreTransplant Hemodialysis", ["No", "Yes"]),
+    ("Hepatocellular Carcinoma*", ["No", "Yes"]),
+    ("Blood Group", ["O", "A", "B", "AB"]),
+    ("Congestive Heart Failure*", ["No", "Yes"]),
     ("Angioplasty", ["No", "Yes"]),
-    ("Dyslipidemia", ["No", "Yes"]),
+    ("Dyslipidemia*", ["No", "Yes"]),
     ("Hypertension", ["No", "Yes"]),
-    ("AcuteMyocardialInfarction", ["No", "Yes"]),
-    ("Stroke", ["Ischemic", "Hemorrhagic", "No"]),
-    ("DiabetesMellitus", ["No", "Yes"]),
-    ("DynamicAlteration", ["No", "Yes"]),
-    ("NonInvasiveMethod", ["No", "Yes"]),
-    ("ValveReplacement", ["No", "Yes"])
+    ("Acute Myocardial Infarction", ["No", "Yes"]),
+    ("Stroke", ["Other", "Hemorrhagic", "Ischemic"]),
+    ("Diabetes Mellitus*", ["No", "Yes"]),
+    ("Valve Replacement", ["Other", "Biological", "Metallic"]),
+    ("Mitral Insufficiency", ["Other", "Yes"]),
+    ("Tricuspid Insufficiency", ["Yes"]),
+    ("Non-invasive Diagnostic Method", ["Yes", "No"]),
+    ("Dynamic Alteration", ["No", "Yes"])
 ]
+
 
 
 
